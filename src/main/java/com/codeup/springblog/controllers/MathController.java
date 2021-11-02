@@ -10,9 +10,9 @@ public class MathController {
 
     @GetMapping("/add/{num1}/and/{num2}")
     @ResponseBody
-    public String add(@PathVariable int num1, @PathVariable int num2) {
+    public int add(@PathVariable int num1, @PathVariable int num2) {
         int sum = num1 + num2;
-        return String.format("%d + %d = %d", num1, num2, sum);
+        return sum;
     }
 
     @GetMapping("/subtract/{num1}/from/{num2}")
