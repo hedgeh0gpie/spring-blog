@@ -7,9 +7,13 @@
 <body>
 
 <h1>Viewing all posts!</h1>
-<div th:each="post : ${postList}">
+<div th:each="post : ${posts}">
     <p th:text="${post.title}"></p>
     <p th:text="${post.body}"></p>
+    <a th:href="@{'/posts/edit/' + ${post.id}}">Edit Post</a>
+    <form th:action="@{'/posts/delete/' + ${post.id}}" th:method="POST">
+        <button>Delete Post</button>
+    </form>
 </div>
 
 

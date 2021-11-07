@@ -3,9 +3,11 @@ package com.codeup.springblog.models;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "doggos")
 public class Doggo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "INT (11) UNSIGNED NOT NULL")
     private long id;
 
     @Column(columnDefinition = "tinyint(3) unsigned", nullable = false, unique = true)
