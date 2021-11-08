@@ -3,6 +3,7 @@ package com.codeup.springblog.controllers;
 import com.codeup.springblog.models.Post;
 import com.codeup.springblog.repositories.PostsRepository;
 import com.codeup.springblog.repositories.UsersRepository;
+import com.codeup.springblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
@@ -12,17 +13,17 @@ public class PostController {
 
     private final PostsRepository postDao;
     private final UsersRepository userDao;
+    private final EmailService emailService;
 
-    public PostController(PostsRepository postDao, UsersRepository userDao) {
+    public PostController(PostsRepository postDao, UsersRepository userDao, EmailService emailService) {
         this.postDao = postDao;
         this.userDao = userDao;
+        this.emailService = emailService;
     }
 
     @GetMapping("/posts")
     public String allTheAds(Model model) {
-
         model.addAttribute("posts", postDao.findAll());
-
         return "posts/index";
     }
 
@@ -104,6 +105,7 @@ public class PostController {
     public String createPost(@ModelAttribute Post post) {
         post.setUser(userDao.getById(1L));
         postDao.save(post);
+        emailService.prepareAndSend(post, "You created " + post.getTitle(), post.getBody());
         return "redirect:/posts";
     }
 
