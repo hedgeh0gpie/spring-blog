@@ -34,3 +34,6 @@ build/
 
 ### Application Properties ###
 src/main/resources/application.properties
+
+src/main/resources/templates/posts/create-oldway.html
+src/main/resources/templates/posts/edit-oldway.html

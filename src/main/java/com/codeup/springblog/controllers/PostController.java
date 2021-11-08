@@ -53,20 +53,20 @@ public class PostController {
 //        return "view an individual post: " + id;
 //    }
 
-    @GetMapping("/posts/edit/{id}")
-    public String editPostGET(@PathVariable long id, Model viewModel) {
-        viewModel.addAttribute("post", postDao.getById(id));
-        return "posts/edit";
-    }
-
-    @PostMapping("/posts/edit/{id}")
-    public String editPostPOST(@PathVariable long id, @RequestParam(name = "title") String title, @RequestParam String body) {
-        Post post = postDao.getById(id);
-        post.setTitle(title);
-        post.setBody(body);
-        postDao.save(post);
-        return "redirect:/posts";
-    }
+//    @GetMapping("/posts/edit/{id}")
+//    public String editPostGET(@PathVariable long id, Model viewModel) {
+//        viewModel.addAttribute("post", postDao.getById(id));
+//        return "edit-oldway";
+//    }
+//
+//    @PostMapping("/posts/edit/{id}")
+//    public String editPostPOST(@PathVariable long id, @RequestParam(name = "title") String title, @RequestParam String body) {
+//        Post post = postDao.getById(id);
+//        post.setTitle(title);
+//        post.setBody(body);
+//        postDao.save(post);
+//        return "redirect:/posts";
+//    }
 
     //    @GetMapping("/posts/create")
 //    @ResponseBody
@@ -79,17 +79,42 @@ public class PostController {
 //    public String createPostPOST() {
 //        return "create a new post";
 //    }
+//    @GetMapping("/posts/create")
+//    public String createPostGET() {
+//        return "create-oldway";
+//    }
+//
+//    @PostMapping("/posts/create")
+//    public String createPostPOST(@RequestParam(name = "title") String title, @RequestParam String body) {
+//        Post post = new Post();
+//        post.setTitle(title);
+//        post.setBody(body);
+//        post.setUser(userDao.getById(1L));
+//        postDao.save(post);
+//        return "redirect:/posts";
+//    }
+
     @GetMapping("/posts/create")
-    public String createPostGET() {
+    public String showCreateForm(Model model) {
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String createPostPOST(@RequestParam(name = "title") String title, @RequestParam String body) {
-        Post post = new Post();
-        post.setTitle(title);
-        post.setBody(body);
-        post.setUser(userDao.getById(1L));
+    public String createPost(@ModelAttribute Post post) {
+        postDao.save(post);
+        return "redirect:/posts";
+    }
+
+    @GetMapping("/posts/edit/{id}")
+    public String showEditForm(@PathVariable long id, Model viewModel) {
+        viewModel.addAttribute("post", postDao.getById(id));
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/edit/{id}")
+    public String editPost(@PathVariable long id, @ModelAttribute("post") Post post) {
+        post.setId(id);
         postDao.save(post);
         return "redirect:/posts";
     }

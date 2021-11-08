@@ -8,18 +8,17 @@
 
     <h1>Edit Post</h1>
 
-    <form th:method="POST" th:object="${post}">
+    <form th:method="POST">
         <div>
             <label for="title">Title</label>
             <br>
-            <input id="title" th:field="*{title}" placeholder="Enter Post Title" th:value="*{title}">
+            <input id="title" name="title" type="text" placeholder="Enter Post Title" th:value="${post.title}">
         </div>
         <div>
             <label for="body">Body</label>
             <br>
-            <textarea th:field="*{body}" id="body" cols="30" rows="10" placeholder="Enter body content" th:text="*{body}"></textarea>
+            <textarea name="body" id="body" cols="30" rows="10" placeholder="Enter body content" th:text="${post.body}"></textarea>
         </div>
-<!--        <input type="hidden" th:field="*{id}">-->
         <button>Edit Post</button>
     </form>
 
