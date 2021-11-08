@@ -102,6 +102,7 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post) {
+        post.setUser(userDao.getById(1L));
         postDao.save(post);
         return "redirect:/posts";
     }
@@ -112,12 +113,28 @@ public class PostController {
         return "posts/edit";
     }
 
+//    @PostMapping("/posts/edit/{id}")
+//    public String editPost(@ModelAttribute("post") Post post) {
+//        post.setUser(userDao.getById(1L));
+//        postDao.save(post);
+//        return "redirect:/posts";
+//    }
+
     @PostMapping("/posts/edit/{id}")
-    public String editPost(@PathVariable long id, @ModelAttribute("post") Post post) {
-        post.setId(id);
-        postDao.save(post);
+    public String editPost(@ModelAttribute Post post) {
+        Post editedPost = postDao.getById(post.getId());
+        editedPost.setTitle(post.getTitle());
+        editedPost.setBody(post.getBody());
+        postDao.save(editedPost);
         return "redirect:/posts";
     }
+
+//    @PostMapping("/posts/edit/{id}")
+//    public String editPost(@PathVariable long id, @ModelAttribute Post post) {
+//        post.setId(id);
+//        postDao.save(post);
+//        return "redirect:/posts";
+//    }
 
     @PostMapping("/posts/delete/{id}")
     public String deletePostPOST(@PathVariable long id) {
