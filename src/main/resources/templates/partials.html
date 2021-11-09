@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Partials</title>
@@ -9,14 +9,16 @@
 <nav th:fragment="navbar">
     <a href="">Thymeleaf</a> |
     <a href="">Navbar</a> |
-    <a href="">Fragment</a>
+    <a href="">Fragment</a> |
+    <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST">
+        <button>Logout</button>
+    </form>
 </nav>
 
 <header th:fragment="header">
     <h1>This is a Thymeleaf header fragment</h1>
 </header>
-
-
 
 
 <footer th:fragment="footer">

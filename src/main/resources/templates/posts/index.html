@@ -5,6 +5,7 @@
     <title>Viewing All Posts</title>
 </head>
 <body>
+<nav th:replace="partials :: navbar"/>
 
 <h1>Viewing all posts!</h1>
 <div th:each="post : ${posts}">
