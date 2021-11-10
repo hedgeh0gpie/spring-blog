@@ -105,9 +105,9 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post) {
-       User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        post.setUser(user);
+       User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User author = userDao.getById(principal.getId());
+        post.setUser(author);
         postDao.save(post);
         emailService.prepareAndSend(post, "You created " + post.getTitle(), post.getBody());
         return "redirect:/posts";
